@@ -2,7 +2,6 @@
 REM written by Manuel Pollhammer
 setlocal
 
-REM Titel des Fensters setzen
 title System Maintenance Tool
 
 echo ================================
