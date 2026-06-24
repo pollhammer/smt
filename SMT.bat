@@ -1,3 +1,9 @@
+:: ============================================================
+:: SMT v2.1 – System Maintenance Terminal (2026)
+:: GitHub: https://github.com/pollhammer/smt
+:: Author: Manuel Pollhammer
+:: ============================================================
+
 @echo off
 setlocal EnableDelayedExpansion
 
@@ -6,6 +12,7 @@ for /f %%A in ('echo prompt $E^| cmd') do set "ESC=%%A"
 title SMT v2.1 Dashboard
 mode con cols=100 lines=38
 chcp 65001>nul
+
 
 :MENU
 
@@ -31,28 +38,28 @@ echo.
 
 echo  CPU       : %CPU%%%
 echo  RAM       : %RAMUSED% / %RAMTOTAL% GB
-echo  SSD C:    : %DISKFREE% GB frei
-echo  Netzwerk  : %NETSTATUS%
+echo  SSD C:    : %DISKFREE% GB free
+echo  Network   : %NETSTATUS%
 echo  Uptime    : %UPTIME%
 echo.
 echo ---------------------------------------
 echo.
 
-echo  1  Temp Dateien löschen
-echo  2  Papierkorb leeren
-echo  3  DNS Cache leeren
-echo  4  SFC Scan
-echo  5  DISM Reparatur
-echo  6  Disk Status
-echo  7  Systeminformationen
-echo  8  Vollwartung
+echo  1  Clear Temporary Files
+echo  2  Empty Recycle Bin
+echo  3  Flush DNS Cache
+echo  4  Run SFC Scan
+echo  5  Run DISM Repair
+echo  6  Check Disk Status
+echo  7  View System Information
+echo  8  Run Full Maintenance
 
 echo.
-echo  R  Aktualisieren
-echo  Q  Beenden
+echo  R  Refresh
+echo  Q  Quit
 echo.
 
-choice /c 12345678RQ /n /m " Auswahl: "
+choice /c 12345678RQ /n /m " Selection: "
 
 set SEL=%errorlevel%
 
@@ -89,7 +96,7 @@ exit /b
 
 cls
 
-echo Loesche TEMP Dateien...
+echo Clearing TEMP files...
 echo.
 
 del /f /s /q "%TEMP%\*" >nul 2>&1
@@ -99,7 +106,7 @@ rd /s /q "%%D" >nul 2>&1
 )
 
 echo.
-echo Fertig
+echo Done.
 
 pause
 
@@ -113,10 +120,10 @@ goto MENU
 cls
 
 echo.
-echo Papierkorb wird geleert...
+echo Emptying Recycle Bin...
 echo.
 
-powershell -NoProfile -Command "try { Clear-RecycleBin -Force -ErrorAction Stop ; Write-Host '[OK] Papierkorb geleert' } catch { Write-Host '[INFO] Papierkorb bereits leer' }"
+powershell -NoProfile -Command "try { Clear-RecycleBin -Force -ErrorAction Stop ; Write-Host '[OK] Recycle Bin emptied' } catch { Write-Host '[INFO] Recycle Bin is already empty' }"
 
 echo.
 pause
@@ -128,7 +135,7 @@ goto MENU
 
 cls
 
-echo DNS Cache wird geloescht...
+echo Flushing DNS Cache...
 echo.
 
 ipconfig /flushdns
@@ -146,7 +153,7 @@ goto MENU
 
 cls
 
-echo Starte SFC...
+echo Starting SFC Scan...
 echo.
 
 sfc /scannow
@@ -162,7 +169,7 @@ goto MENU
 
 cls
 
-echo Starte DISM...
+echo Starting DISM Repair...
 echo.
 
 DISM /Online /Cleanup-Image /RestoreHealth
@@ -203,25 +210,30 @@ goto MENU
 
 cls
 
-echo Starte Vollwartung...
+echo Starting Full Maintenance...
 echo.
 
-call :TEMP
-call :RECYCLE
-call :DNS
+rem individual functions called inside full maintenance
+echo [1/5] Clearing TEMP files...
+del /f /s /q "%TEMP%\*" >nul 2>&1
+for /d %%D in ("%TEMP%\*") do ( rd /s /q "%%D" >nul 2>&1 )
+
+echo [2/5] Emptying Recycle Bin...
+powershell -NoProfile -Command "try { Clear-RecycleBin -Force -ErrorAction Stop } catch {}"
+
+echo [3/5] Flushing DNS Cache...
+ipconfig /flushdns >nul
 
 echo.
-echo Starte SFC...
-
+echo [4/5] Starting SFC Scan...
 sfc /scannow
 
-
 echo.
-echo Starte DISM...
-
+echo [5/5] Starting DISM Repair...
 DISM /Online /Cleanup-Image /RestoreHealth
 
-
+echo.
+echo Full Maintenance completed successfully.
 pause
 
 goto MENU
@@ -234,7 +246,7 @@ goto MENU
 cls
 
 echo.
-echo Danke für die Nutzung von SMT v2.1
+echo Thank you for using SMT v2.1
 echo.
 
 timeout /t 2 >nul
