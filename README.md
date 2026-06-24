@@ -1,7 +1,6 @@
 <div align="center">
 
-<img src="./Logo.svg" width="650" alt="ASCII Logo">
-   
+<img src="./Logo.svg" width="650" alt="ASCII Logo"> <br>  
 # System Maintenance Terminal <br> v2.1 - Dashboard Edition
 **Minimalist system monitoring and maintenance console for Windows** <br>
 by Manuel Pollhammer (2026)
