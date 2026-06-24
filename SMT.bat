@@ -7,7 +7,6 @@ title SMT v2.1 Dashboard
 mode con cols=100 lines=38
 chcp 65001>nul
 
-
 :MENU
 
 call :GetStats
