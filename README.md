@@ -45,7 +45,7 @@ SMT utilizes a smart split-architecture to bypass standard command-line limitati
 
 ## 📸 Screenshots
 <p align="center">
-  <img src="./Screenshots/smt_scr1.png" alt="SMT Dashboard" width="800">
+  <img src="./Screenshots/smt_scr01.png" alt="SMT Dashboard" width="800">
   <br>
   <i>Main Performance Dashboard View</i>
 </p>
