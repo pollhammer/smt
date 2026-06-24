@@ -1,12 +1,6 @@
-
-                                           ███████╗███╗   ███╗████████╗
-                                           ██╔════╝████╗ ████║╚══██╔══╝
-                                           ███████╗██╔████╔██║   ██║
-                                           ╚════██║██║╚██╔╝██║   ██║
-                                           ███████║██║ ╚═╝ ██║   ██║
-                                           ╚══════╝╚═╝     ╚═╝   ╚═╝
-   
 <div align="center">
+
+<img src="./logo.svg" width="600" alt="ASCII Logo">
    
 # System Maintenance Terminal <br> v2.1 - Dashboard Edition
 **Minimalist system monitoring and maintenance console for Windows** <br>
